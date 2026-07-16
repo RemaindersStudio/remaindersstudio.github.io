@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remainders Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#1a1208;--parchment:#f5ede0;--aged:#e8d9c0;--sepia:#c4a882;--rust:#8b3a1a;--crimson:#6b1a1a;--ash:#3d3228;--ghost:#f0e8d8cc;--border-col:#c4a88244;--gold:#c8952a}
+html{scroll-behavior:smooth}
+body{background-color:#0f0b07;color:var(--parchment);font-family:'EB Garamond',Georgia,serif;font-size:18px;line-height:1.8;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;background:rgba(15,11,7,0.95);border-bottom:1px solid var(--border-col)}
+.nav-logo{font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:.25em;color:var(--sepia);text-decoration:none;text-transform:uppercase}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'EB Garamond',serif;font-size:.88rem;letter-spacing:.12em;color:var(--sepia);text-decoration:none;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--parchment)}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;border-bottom:1px solid var(--border-col)}
+.hero-ornament{font-family:'EB Garamond',serif;font-size:.9rem;letter-spacing:.4em;color:var(--sepia);text-transform:uppercase;margin-bottom:2rem;opacity:.6}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:700;letter-spacing:.04em;line-height:1.05;color:var(--parchment);margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;color:var(--sepia)}
+.hero-divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--sepia),transparent);margin:1.5rem auto}
+.hero-tagline{font-family:'EB Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--sepia);letter-spacing:.05em;margin-bottom:2rem}
+.hero-desc{max-width:520px;text-align:center;font-size:1rem;color:#c4b090;line-height:1.9}
+section{max-width:900px;margin:0 auto;padding:6rem 2rem}
+.section-label{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.4em;color:var(--sepia);text-transform:uppercase;margin-bottom:1rem;opacity:.65}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--parchment);margin-bottom:1.5rem;line-height:1.2}
+.section-divider{width:80px;height:1px;background:linear-gradient(90deg,var(--sepia),transparent);margin-bottom:2.5rem}
+.section-body{font-size:1rem;color:#c4b090;line-height:1.9}
+.section-body p+p{margin-top:1.2rem}
+.full-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border-col),transparent)}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:3rem}
+.project-card{background:rgba(255,255,255,.02);border:1px solid var(--border-col);padding:2rem;position:relative;transition:border-color .3s,background .3s}
+.project-card::before{content:'';position:absolute;top:-1px;left:-1px;width:36px;height:36px;border-top:1px solid var(--sepia);border-left:1px solid var(--sepia);opacity:0;transition:opacity .3s}
+.project-card:hover{border-color:rgba(196,168,130,.35);background:rgba(255,255,255,.04)}
+.project-card:hover::before{opacity:1}
+.project-status{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;opacity:.8}
+.project-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--parchment);margin-bottom:.5rem}
+.project-subtitle{font-family:'EB Garamond',serif;font-style:italic;font-size:.92rem;color:var(--sepia);margin-bottom:1rem}
+.project-desc{font-size:.92rem;color:#a89070;line-height:1.7}
+.games-list{margin-top:2.5rem}
+.game-entry{border-top:1px solid var(--border-col);padding:2rem 0;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
+.game-entry:last-child{border-bottom:1px solid var(--border-col)}
+.game-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--parchment);margin-bottom:.3rem}
+.game-meta{font-family:'EB Garamond',serif;font-style:italic;font-size:.88rem;color:var(--sepia);margin-bottom:.6rem}
+.game-desc{font-size:.92rem;color:#a89070;line-height:1.6}
+.game-badge{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sepia);border:1px solid var(--border-col);padding:.4rem .8rem;white-space:nowrap;opacity:.7}
+.devlog-entry{border-top:1px solid var(--border-col);padding:2.5rem 0}
+.devlog-entry:last-child{border-bottom:1px solid var(--border-col)}
+.devlog-date{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sepia);opacity:.65;margin-bottom:.8rem}
+.devlog-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--parchment);margin-bottom:1rem}
+.devlog-body{font-size:.95rem;color:#a89070;line-height:1.8}
+.devlog-body p+p{margin-top:1rem}
+.pull-quote{border-left:2px solid var(--sepia);padding:.8rem 0 .8rem 2rem;margin:2.5rem 0;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--sepia);line-height:1.6}
+.contact-links{display:flex;flex-direction:column;gap:.8rem;margin-top:2.5rem}
+.contact-link{display:flex;align-items:center;gap:1.5rem;color:#a89070;text-decoration:none;font-size:1rem;padding:1rem 1.5rem;border:1px solid var(--border-col);transition:border-color .3s,color .3s}
+.contact-link:hover{color:var(--parchment);border-color:rgba(196,168,130,.35)}
+.contact-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sepia);min-width:80px;opacity:.65}
+footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border-col);font-family:'EB Garamond',serif;font-style:italic;font-size:.9rem;color:var(--sepia);opacity:.55}
+footer p+p{margin-top:.4rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">Remainders</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#devlog">Devlog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <p class="hero-ornament">Est. 2026 &mdash; Newcastle upon Tyne</p>
+  <h1>Remain<em>ders</em></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline">What's left behind.</p>
+  <p class="hero-desc">An independent game studio focused on historically grounded true story horror. We tell the stories history left unfinished.</p>
+</section>
+
+<div class="full-divider"></div>
+
+<section id="about">
+  <p class="section-label">The Studio</p>
+  <h2 class="section-title">About Remainders</h2>
+  <div class="section-divider"></div>
+  <div class="section-body">
+    <p>Remainders is an independent game studio founded in 2026 by Amy Maskery, a Games Computing student at Northumbria University and a Newcastle local. We create atmospheric, story-driven horror games grounded in real historical events — honouring the people and places that history left behind.</p>
+    <p>Our work is built on three principles: historical honesty, atmospheric depth, and silent storytelling. We believe the most unsettling horror is the kind that actually happened.</p>
+    <div class="pull-quote">"The scariest stories are the ones nobody could explain."</div>
+    <p>Every Remainders title begins with research. Real events, real people, real places — reimagined as interactive experiences that sit with the ambiguity of the historical record rather than resolving it.</p>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<section id="projects">
+  <p class="section-label">In Development</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="section-divider"></div>
+  <p class="section-body">Three titles currently in various stages of design and development. Each one is a true story. Each one remains unsolved.</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <p class="project-status">&#x25CF;&nbsp; In Development</p>
+      <h3 class="project-title">The House</h3>
+      <p class="project-subtitle">A free learning project &mdash; 2026</p>
+      <p class="project-desc">A 2D escape room puzzle game set across five rooms of a single abandoned house. Released episodically on Itch.io. Free, always.</p>
+    </div>
+    <div class="project-card">
+      <p class="project-status">&#x25CB;&nbsp; In Design</p>
+      <h3 class="project-title">The Bearer</h3>
+      <p class="project-subtitle">London, 1665</p>
+      <p class="project-desc">The Great Plague. A rat navigates a city in collapse — carrying the disease that is killing the world above. Survival horror from the only perspective that survived everything.</p>
+    </div>
+    <div class="project-card">
+      <p class="project-status">&#x25CB;&nbsp; In Design</p>
+      <h3 class="project-title">The Flannan Isles</h3>
+      <p class="project-subtitle">Outer Hebrides, 1900</p>
+      <p class="project-desc">Three lighthouse keepers vanished without explanation. No bodies. No signal. A half-eaten meal on the table. Nobody knows what happened. We don't pretend to.</p>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<section id="games">
+  <p class="section-label">Releases</p>
+  <h2 class="section-title">Games</h2>
+  <div class="section-divider"></div>
+  <p class="section-body">All Remainders games are free. They always will be.</p>
+  <div class="games-list">
+    <div class="game-entry">
+      <div>
+        <h3 class="game-title">The House</h3>
+        <p class="game-meta">2D Escape Room &mdash; Unity &mdash; Itch.io &mdash; 2026</p>
+        <p class="game-desc">An episodic puzzle game set in a single abandoned house. Five rooms. Each room a self-contained mystery. Find the objects. Read the clues. Find your way out. New rooms added over time.</p>
+      </div>
+      <span class="game-badge">Coming Soon</span>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<section id="devlog">
+  <p class="section-label">Development Log</p>
+  <h2 class="section-title">Devlog</h2>
+  <div class="section-divider"></div>
+  <p class="section-body">Progress notes from the studio. Honest, irregular, and always in progress.</p>
+  <div style="margin-top:2.5rem">
+    <div class="devlog-entry">
+      <p class="devlog-date">April 2026 &mdash; Entry 001</p>
+      <h3 class="devlog-title">The House &mdash; Day One</h3>
+      <div class="devlog-body">
+        <p>This is day one. The bedroom is the current focus. Today I've been working on the visual foundation — establishing the room layout, colour palette, and atmosphere. The walls are sage green, the floor warm wood, and vines creep in from the corner suggesting the house has been left alone for some time.</p>
+        <p>The rough puzzle structure for the bedroom is planned. A music box and grandfather clock are key objects. Multiple drawers and shelves contain clues. The key to escape is hidden in the music box under the bed.</p>
+        <p>This is a learning project. The art will improve. The goal for now is to finish something and release it — not to make something perfect. Progress over perfection. Ship it when it's ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<section id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="section-title">Contact</h2>
+  <div class="section-divider"></div>
+  <p class="section-body">Remainders is a one-person studio. All messages are read by Amy.</p>
+  <div class="contact-links">
+    <a href="https://itch.io" class="contact-link"><span class="contact-label">Itch.io</span>remaindersstudio.itch.io</a>
+    <a href="https://twitter.com" class="contact-link"><span class="contact-label">Twitter</span>@remaindersstudio</a>
+    <a href="https://instagram.com" class="contact-link"><span class="contact-label">Instagram</span>@remaindersstudio</a>
+    <a href="https://tiktok.com" class="contact-link"><span class="contact-label">TikTok</span>@remaindersstudio</a>
+    <a href="https://linkedin.com/in/amy-maskery-199206351" class="contact-link"><span class="contact-label">LinkedIn</span>Amy Maskery</a>
+  </div>
+</section>
+
+<footer>
+  <p>Remainders Studio &mdash; Newcastle upon Tyne &mdash; Est. 2026</p>
+  <p>What's left behind.</p>
+</footer>
+
+</body>
+</html>
